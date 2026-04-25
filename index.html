@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trick Tower | Prisoner Swap Strategy</title>
+    <meta name="description" content="Trick Tower Prisoner Management — Strategy simulation for separating violent and non-violent prisoners.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+
+        <header>
+            <div class="logo-area">
+                <span class="glitch">TRICK TOWER</span>
+                <span class="sub-logo">PRISONER MANAGEMENT SYSTEM v2.0</span>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-item" id="turn-counter">TURN <span class="val">0/50</span></div>
+                <div class="stat-item" id="attention-meter">ATTENTION <span class="val">100%</span></div>
+                <div class="stat-item" id="stability-index">SEPARATION <span class="val">—</span></div>
+            </div>
+        </header>
+
+        <main>
+
+            <!-- Left: Tower -->
+            <section id="tower-visualization">
+                <div class="section-header">
+                    <h2>TOWER MONITOR — 15 FLOORS / 100 PRISONERS</h2>
+                </div>
+                <div id="tower-grid" class="tower-grid">
+                    <!-- Floors injected by JS -->
+                </div>
+            </section>
+
+            <!-- Right: Control Center -->
+            <section id="control-center">
+
+                <div class="panel info-panel">
+                    <h3>FLOOR DATA — <span id="current-floor-id">SELECT A FLOOR</span></h3>
+                    <div id="prisoner-list" class="prisoner-list">
+                        <div class="empty-state">Click any floor in the tower to observe it</div>
+                    </div>
+                </div>
+
+                <div class="panel strategy-panel">
+                    <h3>STRATEGY ENGINE</h3>
+                    <div class="engine-controls">
+                        <button id="suggest-obs-btn" class="btn primary">📡 SUGGEST OBS.</button>
+                        <button id="suggest-swap-btn" class="btn secondary">⇄ SUGGEST SWAP</button>
+                    </div>
+                    <div id="suggestion-output" class="suggestion-output">
+                        Awaiting first observation...
+                    </div>
+                    <div class="detection-list">
+                        <h4>🚩 FLAGGED RECORDS</h4>
+                        <ul id="flagged-prisoners">
+                            <li class="no-flags">No flagged prisoners</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- Heatmap -->
+        <section id="heatmap-container">
+            <div class="section-header">
+                <h2>THREAT DENSITY HEATMAP (per floor)</h2>
+            </div>
+            <canvas id="heatmap-canvas"></canvas>
+        </section>
+
+        <!-- Log -->
+        <footer>
+            <div id="event-log">
+                <!-- Logs prepended by JS -->
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- End-Game Modal -->
+    <div id="overlay" class="hidden">
+        <div class="modal">
+            <h2 id="modal-title">MISSION LOG</h2>
+            <div id="modal-content"></div>
+            <button id="modal-close">RESTART MISSION</button>
+        </div>
+    </div>
+
+    <script type="module" src="engine.js"></script>
+</body>
+</html>
