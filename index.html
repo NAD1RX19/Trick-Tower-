@@ -1,98 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trick Tower | Prisoner Swap Strategy</title>
-    <meta name="description" content="Trick Tower Prisoner Management — Strategy simulation for separating violent and non-violent prisoners.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zoldyck Estate — Assassination Contract Board</title>
+  <meta name="description" content="Hunter x Hunter strategy simulator. Manage assassination contracts, plan routes, and maximize gold as a Zoldyck operative."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div id="app">
 
-        <header>
-            <div class="logo-area">
-                <span class="glitch">TRICK TOWER</span>
-                <span class="sub-logo">PRISONER MANAGEMENT SYSTEM v2.0</span>
-            </div>
-            <div class="stats-bar">
-                <div class="stat-item" id="turn-counter">TURN <span class="val">0/50</span></div>
-                <div class="stat-item" id="attention-meter">ATTENTION <span class="val">100%</span></div>
-                <div class="stat-item" id="stability-index">SEPARATION <span class="val">—</span></div>
-            </div>
-        </header>
-
-        <main>
-
-            <!-- Left: Tower -->
-            <section id="tower-visualization">
-                <div class="section-header">
-                    <h2>TOWER MONITOR — 15 FLOORS / 100 PRISONERS</h2>
-                </div>
-                <div id="tower-grid" class="tower-grid">
-                    <!-- Floors injected by JS -->
-                </div>
-            </section>
-
-            <!-- Right: Control Center -->
-            <section id="control-center">
-
-                <div class="panel info-panel">
-                    <h3>FLOOR DATA — <span id="current-floor-id">SELECT A FLOOR</span></h3>
-                    <div id="prisoner-list" class="prisoner-list">
-                        <div class="empty-state">Click any floor in the tower to observe it</div>
-                    </div>
-                </div>
-
-                <div class="panel strategy-panel">
-                    <h3>STRATEGY ENGINE</h3>
-                    <div class="engine-controls">
-                        <button id="suggest-obs-btn" class="btn primary">📡 SUGGEST OBS.</button>
-                        <button id="suggest-swap-btn" class="btn secondary">⇄ SUGGEST SWAP</button>
-                    </div>
-                    <div id="suggestion-output" class="suggestion-output">
-                        Awaiting first observation...
-                    </div>
-                    <div class="detection-list">
-                        <h4>🚩 FLAGGED RECORDS</h4>
-                        <ul id="flagged-prisoners">
-                            <li class="no-flags">No flagged prisoners</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </section>
-        </main>
-
-        <!-- Heatmap -->
-        <section id="heatmap-container">
-            <div class="section-header">
-                <h2>THREAT DENSITY HEATMAP (per floor)</h2>
-            </div>
-            <canvas id="heatmap-canvas"></canvas>
-        </section>
-
-        <!-- Log -->
-        <footer>
-            <div id="event-log">
-                <!-- Logs prepended by JS -->
-            </div>
-        </footer>
-
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-z">Z</span>
+        <span class="logo-text">OLDYCK ESTATE</span>
+      </div>
+      <span class="header-sub">Assassination Contract Board — Classified</span>
     </div>
+    <div class="header-right">
+      <div class="hud-day">Day <span id="hud-day-val">1</span> / 200</div>
+      <div class="hud-gold">⬡ <span id="hud-gold-val">0</span>g</div>
+      <div class="hud-rep">⚜ <span id="hud-rep-val">100</span></div>
+    </div>
+  </header>
 
-    <!-- End-Game Modal -->
-    <div id="overlay" class="hidden">
-        <div class="modal">
-            <h2 id="modal-title">MISSION LOG</h2>
-            <div id="modal-content"></div>
-            <button id="modal-close">RESTART MISSION</button>
+  <!-- CONTROLS BAR -->
+  <div class="controls-bar">
+    <button class="btn btn-gold" id="btn-run">▶ Run Simulation</button>
+    <button class="btn btn-outline" id="btn-reset">↺ New Game</button>
+    <button class="btn btn-outline" id="btn-save">💾 Save</button>
+    <div class="speed-wrap">
+      <label class="speed-label">Speed</label>
+      <input type="range" id="speed-control" min="5" max="200" value="40" step="5"/>
+      <span id="speed-val">40x</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="main-nav">
+    <button class="nav-btn active" data-section="dashboard">🏠 Dashboard</button>
+    <button class="nav-btn" data-section="contracts">📋 Contract Board</button>
+    <button class="nav-btn" data-section="map">🗺 World Map</button>
+    <button class="nav-btn" data-section="timeline">📜 Timeline</button>
+    <button class="nav-btn" data-section="analytics">📊 Analytics</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- DASHBOARD -->
+    <section class="section active" id="section-dashboard">
+      <div id="dashboard"></div>
+    </section>
+
+    <!-- CONTRACT BOARD -->
+    <section class="section" id="section-contracts">
+      <div id="contract-board"></div>
+    </section>
+
+    <!-- MAP -->
+    <section class="section" id="section-map">
+      <div id="map-view"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section" id="section-timeline">
+      <h2 class="section-title">📜 Mission Timeline</h2>
+      <div id="timeline" class="timeline-wrap"></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="section" id="section-analytics">
+      <h2 class="section-title">📊 Analytics</h2>
+      <div class="analytics-grid">
+        <div class="chart-card wide">
+          <h3 class="chart-title">⬡ Gold Earned Over Time</h3>
+          <canvas id="gold-chart"></canvas>
         </div>
-    </div>
+        <div class="chart-card">
+          <h3 class="chart-title">⚡ Skill Radar</h3>
+          <canvas id="skill-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">◎ Contract Status</h3>
+          <canvas id="pie-chart"></canvas>
+        </div>
+        <div class="chart-card wide">
+          <h3 class="chart-title">⚜ Reputation Over Time</h3>
+          <canvas id="rep-chart"></canvas>
+        </div>
+      </div>
+    </section>
 
-    <script type="module" src="engine.js"></script>
+  </main>
+
+  <!-- FINAL REPORT OVERLAY -->
+  <div id="final-report" style="display:none;"></div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- AMBIENT PARTICLES -->
+  <div class="particles" aria-hidden="true">
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
